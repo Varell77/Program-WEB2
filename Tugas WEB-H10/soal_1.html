@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Daftar Mahasiswa</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+    body{
+        font-family: Arial;
+    }
+
+    .box{
+        width: 500px;
+        border: 1px solid black;
+        padding: 15px;
+    }
+
+    h3{
+        margin-top: 0;
+    }
+
+    table{
+        border-collapse: collapse;
+        margin-top: 15px;
+        width: 350px;
+    }
+
+    th{
+        background: black;
+        color: white;
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    td{
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    tr:odd{
+        background: #FFFFCC;
+    }
+
+    tr:even{
+        background: #CCFFAA;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h3>
+Selamat! Berikut adalah Daftar Mahasiswa yang mendapat Nilai A 
+Pemrograman Web SI Tahun Ajaran 2023/2024
+</h3>
+
+<input type="radio" name="kelas" value="all" checked> All <br>
+<input type="radio" name="kelas" value="A"> Kelas A <br>
+<input type="radio" name="kelas" value="B"> Kelas B <br><br>
+
+<button id="search">Search</button>
+
+<br><br>
+
+<table id="hasil">
+    <thead>
+        <tr>
+            <th>NRP</th>
+            <th>NAMA</th>
+            <th>KELAS</th>
+            <th>NILAI AKHIR</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+</table>
+
+</div>
+
+<script>
+
+let nilai = {
+    "js":[
+        {
+            "nrp":"1072001",
+            "nama":"Budi",
+            "kelas":"A",
+            "nilai":98
+        },
+        {
+            "nrp":"1072002",
+            "nama":"Andi",
+            "kelas":"B",
+            "nilai":80
+        },
+        {
+            "nrp":"1072003",
+            "nama":"Cindy",
+            "kelas":"A",
+            "nilai":70
+        }
+    ],
+
+    "A.js":[
+        {
+            "nrp":"1072001",
+            "nama":"Budi",
+            "kelas":"A",
+            "nilai":98
+        },
+        {
+            "nrp":"1072003",
+            "nama":"Cindy",
+            "kelas":"A",
+            "nilai":70
+        }
+    ],
+
+    "B.js":[
+        {
+            "nrp":"1072002",
+            "nama":"Andi",
+            "kelas":"B",
+            "nilai":80
+        }
+    ]
+};
+
+$("#search").click(function(){
+
+    let pilih = $("input[name='kelas']:checked").val();
+
+    let dataTampil = [];
+
+    if(pilih == "all"){
+        dataTampil = nilai.js;
+    }
+    else if(pilih == "A"){
+        dataTampil = nilai["A.js"];
+    }
+    else if(pilih == "B"){
+        dataTampil = nilai["B.js"];
+    }
+
+    let isi = "";
+
+    $.each(dataTampil, function(i, data){
+
+        isi += `
+        <tr>
+            <td>${data.nrp}</td>
+            <td>${data.nama}</td>
+            <td>${data.kelas}</td>
+            <td>${data.nilai}</td>
+        </tr>
+        `;
+    });
+
+    $("#hasil tbody").html(isi);
+
+});
+
+</script>
+
+</body>
+</html>

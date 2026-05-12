@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Portal SI Sistem Informasi</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+
+body{
+    font-family: Times New Roman;
+}
+
+.container{
+    width: 700px;
+    margin: auto;
+}
+
+table{
+    border-collapse: collapse;
+    width: 350px;
+    margin-bottom: 20px;
+}
+
+table, td{
+    border: 1px solid gray;
+}
+
+td{
+    padding: 5px;
+}
+
+button{
+    margin-top: 10px;
+}
+
+#hasil{
+    width: 700px;
+    border: 1px solid gray;
+}
+
+#hasil h1{
+    text-align: center;
+    color: blue;
+    text-decoration: underline;
+}
+
+.data{
+    border-top: 1px solid gray;
+    padding: 10px;
+}
+
+.judul{
+    color: blue;
+    text-decoration: underline;
+}
+
+.link{
+    color: blue;
+    text-decoration: underline;
+}
+
+.footer{
+    border-top: 1px solid gray;
+    padding: 5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<table>
+    <tr>
+        <td>Title</td>
+    </tr>
+
+    <tr>
+        <td>Content</td>
+    </tr>
+
+    <tr>
+        <td>Generator</td>
+    </tr>
+</table>
+
+<button id="look">Look</button>
+
+<br><br>
+
+<div id="hasil">
+
+</div>
+
+</div>
+
+<script>
+
+let SIJson = {
+    "title" : "Portal SI-Sistem Informasi",
+
+    "generator" : "SI-SI FTI UKM",
+
+    "data" : [
+        {
+            "kode" : "BIE02",
+            "matkul" : "Pemrograman Web",
+            "dosen" : "Dosen SI-SI",
+            "tanggal" : "01-January-2023",
+            "deskripsi" : "Matakuliah ini akan mengenalkan dan mengajarkan mahasiswa tentang dasar-dasar dalam pemrograman web. Di sini mahasiswa akan mempelajari penulisan tag-tag HTML sebagai pembentuk dasar dari suatu halaman web, mahasiswa juga akan mempelajari CSS sebagai pelengkap fungsionalitas dari HTML.",
+            "universitas" : "Click Here",
+            "link" : "https://ukm.ac.id",
+            "tag" : "SI-Sistem Informasi, Pemrograman Web"
+        },
+
+        {
+            "kode" : "IS407",
+            "matkul" : "Basis Data 2",
+            "dosen" : "Dosen SI-SI",
+            "tanggal" : "01-January-2023",
+            "deskripsi" : "Mata kuliah ini mengajarkan kepada mahasiswa bahasa pemrograman SQL yang meliputi : Perintah SQL untuk mengambil data dari tabel dan menggunakan data, fungsi-fungsi yang terdapat pada oracle seperti fungsi tanggal dll.",
+            "universitas" : "Click Here",
+            "link" : "https://ukm.ac.id",
+            "tag" : "SI-Sistem Informasi, Basis Data 2"
+        }
+    ]
+};
+
+$("#look").click(function(){
+
+    let isi = "";
+
+    isi += `
+    <h1>${SIJson.title}</h1>
+    `;
+
+    $.each(SIJson.data, function(i, data){
+
+        isi += `
+        <div class="data">
+
+            <div class="judul">
+                ${data.kode} - ${data.matkul}
+            </div>
+
+            <br>
+
+            <b>By :</b> ${data.dosen} / <i>${data.tanggal}</i>
+
+            <br><br>
+
+            ${data.deskripsi}
+
+            <br><br>
+
+            Universitas :
+            <a href="${data.link}" class="link">
+                ${data.universitas}
+            </a>
+
+            <br><br>
+
+            Tag(s) : ${data.tag}
+
+        </div>
+        `;
+    });
+
+    isi += `
+    <div class="footer">
+        ©${SIJson.generator}
+    </div>
+    `;
+
+    $("#hasil").html(isi);
+
+});
+
+</script>
+
+</body>
+</html>
