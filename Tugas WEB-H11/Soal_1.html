@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <style>
+
+        body{
+            font-family: Times New Roman;
+        }
+
+        .login{
+            width:350px;
+            border:1px solid black;
+            margin:auto;
+            margin-top:50px;
+        }
+
+        .header{
+            background:#00008B;
+            color:white;
+            text-align:center;
+            font-size:60px;
+            padding:5px;
+        }
+
+        .content{
+            padding:10px;
+        }
+
+        .footer{
+            border-top:1px solid black;
+            padding:5px;
+        }
+
+        input[type=text],
+        input[type=password]{
+            width:140px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login">
+
+    <div class="header">
+        Login
+    </div>
+
+    <div class="content">
+
+        <form action="prosesLogin.php" method="post">
+
+            <table>
+                <tr>
+                    <td>Username</td>
+                    <td>
+                        <input type="text" name="username">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Password</td>
+                    <td>
+                        <input type="password" name="password">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="login">
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+
+    </div>
+
+    <div class="footer">
+        @UKM2014 <br>
+        Name-NRP<sup>&copy;</sup>
+    </div>
+
+</div>
+
+</body>
+</html>

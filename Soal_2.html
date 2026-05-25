@@ -1,0 +1,355 @@
+CREATE DATABASE db_sekolah;
+
+USE db_sekolah;
+
+CREATE TABLE siswa(
+    id INT(10) AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100),
+    kelas VARCHAR(50)
+);
+
+<?php
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "db_sekolah";
+
+$conn = mysqli_connect($host, $user, $pass, $db);
+
+if(!$conn){
+    die("Koneksi Gagal");
+}
+
+?>
+
+<?php
+include 'koneksi.php';
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Siswa</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+        }
+
+        .box{
+            width: 500px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td{
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+        }
+
+        .tambah{
+            background: green;
+        }
+
+        .edit{
+            background: dodgerblue;
+        }
+
+        .hapus{
+            background: red;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<center>
+    <h2>Data Siswa</h2>
+</center>
+
+<a href="tambah.php" class="tambah">
+    Tambah Data
+</a>
+
+<br><br>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Nama</th>
+    <th>Kelas</th>
+    <th>Aksi</th>
+</tr>
+
+<?php
+
+$data = mysqli_query($conn, "SELECT * FROM siswa");
+
+while($d = mysqli_fetch_array($data)){
+
+?>
+
+<tr>
+
+    <td><?php echo $d['id']; ?></td>
+    <td><?php echo $d['nama']; ?></td>
+    <td><?php echo $d['kelas']; ?></td>
+
+    <td>
+
+        <a href="edit.php?id=<?php echo $d['id']; ?>" class="edit">
+            Edit
+        </a>
+
+        <a href="hapus.php?id=<?php echo $d['id']; ?>" class="hapus">
+            Hapus
+        </a>
+
+    </td>
+
+</tr>
+
+<?php } ?>
+
+</table>
+
+</div>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Data</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+        }
+
+        .box{
+            width: 400px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        input[type=text]{
+            width: 100%;
+            height: 30px;
+        }
+
+        .simpan{
+            background: green;
+            color: white;
+            border: none;
+            padding: 7px 15px;
+        }
+
+        .kembali{
+            background: dodgerblue;
+            color: white;
+            padding: 7px 15px;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<center>
+    <h2>Tambah Data Siswa</h2>
+</center>
+
+<form method="post" action="proses_tambah.php">
+
+    Nama : <br>
+    <input type="text" name="nama">
+
+    <br><br>
+
+    Kelas : <br>
+    <input type="text" name="kelas">
+
+    <br><br>
+
+    <input type="submit" value="Simpan" class="simpan">
+
+</form>
+
+<br>
+
+<a href="index.php" class="kembali">
+    Kembali
+</a>
+
+</div>
+
+</body>
+</html>
+
+<?php
+
+include 'koneksi.php';
+
+$nama  = $_POST['nama'];
+$kelas = $_POST['kelas'];
+
+mysqli_query($conn, "INSERT INTO siswa VALUES('', '$nama', '$kelas')");
+
+header("location:index.php");
+
+?>
+
+<?php
+
+include 'koneksi.php';
+
+$id = $_GET['id'];
+
+$data = mysqli_query($conn, "SELECT * FROM siswa WHERE id='$id'");
+
+$d = mysqli_fetch_array($data);
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Data</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+        }
+
+        .box{
+            width: 400px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        input[type=text]{
+            width: 100%;
+            height: 30px;
+        }
+
+        .update{
+            background: green;
+            color: white;
+            border: none;
+            padding: 7px 15px;
+        }
+
+        .kembali{
+            background: dodgerblue;
+            color: white;
+            padding: 7px 15px;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<center>
+    <h2>Edit Data Siswa</h2>
+</center>
+
+<form method="post" action="proses_edit.php">
+
+    <input type="hidden" name="id"
+    value="<?php echo $d['id']; ?>">
+
+    Nama : <br>
+    <input type="text" name="nama"
+    value="<?php echo $d['nama']; ?>">
+
+    <br><br>
+
+    Kelas : <br>
+    <input type="text" name="kelas"
+    value="<?php echo $d['kelas']; ?>">
+
+    <br><br>
+
+    <input type="submit" value="Update" class="update">
+
+</form>
+
+<br>
+
+<a href="index.php" class="kembali">
+    Kembali
+</a>
+
+</div>
+
+</body>
+</html>
+
+<?php
+
+include 'koneksi.php';
+
+$id    = $_POST['id'];
+$nama  = $_POST['nama'];
+$kelas = $_POST['kelas'];
+
+mysqli_query($conn,
+"UPDATE siswa SET
+nama='$nama',
+kelas='$kelas'
+WHERE id='$id'");
+
+header("location:index.php");
+
+?>
+
+
+<?php
+
+include 'koneksi.php';
+
+$id = $_GET['id'];
+
+mysqli_query($conn,
+"DELETE FROM siswa WHERE id='$id'");
+
+header("location:index.php");
+
+?>
